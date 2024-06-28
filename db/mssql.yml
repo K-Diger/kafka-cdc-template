@@ -12,8 +12,15 @@ services:
       - "1433:1433"
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "qwer1234!"
+      SA_PASSWORD: "admin123$%"
       MSSQL_AGENT_ENABLED: "true"
       MSSQL_COLLATION: "LATIN1_GENERAL_100_CI_AS_SC_UTF8"
     cap_add:
       - SYS_PTRACE
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - kafka_network
+
+volumes:
+  mssql_data:

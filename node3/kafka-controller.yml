@@ -20,6 +20,6 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-controller-logs'
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
     volumes:
-      - "./controller3_data:/tmp/kraft-controller-logs"
+      - ./controller3_data:/tmp/kraft-controller-logs
     networks:
       - kafka_network

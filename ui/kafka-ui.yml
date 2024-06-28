@@ -1,4 +1,5 @@
 version: '3'
+
 networks:
   kafka_network:
     external: true
@@ -16,5 +17,10 @@ services:
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: "connect-cluster"
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: "http://connect1:8083,http://connect2:8084,http://connect3:8085"
+    volumes:
+      - kafka_ui_data:/data
     networks:
       - kafka_network
+
+volumes:
+  kafka_ui_data:

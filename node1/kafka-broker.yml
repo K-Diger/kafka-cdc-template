@@ -31,6 +31,6 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
     volumes:
-      - "./broker1_data:/tmp/kraft-combined-logs"
+      - ./broker1_data:/tmp/kraft-combined-logs
     networks:
       - kafka_network
