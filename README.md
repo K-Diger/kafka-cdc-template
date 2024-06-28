@@ -8,9 +8,7 @@
 
 1. 프로젝트 루트 폴더에서 `make start` (모든 컨테이너 다 띄우기)명령어를 실행시킨다. 만약 컨테이너를 다 내리고 싶다면 `make stop`을 실행시키면 된다.
 2. 컨테이너가 다 떴으면 아래 참고 사항의 내용을 수행한다.
-3. 참고 사항의 내용을 수행했으면 HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:8084/connectors` 혹은 `http://localhost:8085/connectors` 으로 DB에 관한 커넥트를 등록한다.
-   4. POST 요청으로 보낸다.
-   5. Requset Body는 아래와 같다.
+3. 참고 사항의 내용을 수행했으면 HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:8084/connectors` 혹은 `http://localhost:8085/connectors` 으로 DB에 관한 커넥트를 등록한다. 이 때 메서드는 POST 요청으로 보내야하며, Requset Body는 아래와 같다.
 
 ```json
 {
