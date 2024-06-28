@@ -4,7 +4,6 @@ kafka-cdc.iml
 
 node1/connect1_data
 node1/broker1_data
-node1/connect1_data
 node1/connect1_logs
 node1/connect1_plugins
 
