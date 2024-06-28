@@ -1,21 +1,22 @@
 kafka-cdc.iml
 
-*.controller1_data
-*.broker1_data
-*.connect1_data
-*.connect1_logs
-*.connect1_plugins
+.idea
+
+node1/connect1_data
+node1/broker1_data
+node1/connect1_data
+node1/connect1_logs
+node1/connect1_plugins
 
 
-*.controller2_data
-*.broker2_data
-*.connect2_data
-*.connect2_logs
-*.connect2_plugins
+node2/controller2_data
+node2/broker2_data
+node2/connect2_data
+node2/connect2_logs
+node2/connect2_plugins
 
-
-*.controller3_data
-*.broker3_data
-*.connect3_data
-*.connect3_logs
-*.connect3_plugins
+node3/controller3_data
+node3/broker3_data
+node3/connect3_data
+node3/connect3_logs
+node3/connect3_plugins
