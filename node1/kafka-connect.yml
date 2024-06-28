@@ -37,9 +37,7 @@ services:
       - -c
       - |
         echo "Installing Connector"
-        confluent-hub install --no-prompt debezium/debezium-connector-sqlserver:2.2.1
-        confluent-hub install --no-prompt debezium/debezium-connector-mysql:1.7.0
-        confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:11.1.3
+        confluent-hub install --no-prompt debezium/debezium-connector-sqlserver:2.5.4
         #
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run &
