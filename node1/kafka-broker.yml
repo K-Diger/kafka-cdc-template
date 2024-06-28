@@ -1,0 +1,36 @@
+version: '3'
+networks:
+  kafka_network:
+    external: true
+    driver: bridge
+
+services:
+  broker1:
+    user: root
+    image: confluentinc/cp-kafka:latest
+    container_name: broker1
+    ports:
+      - "9091:9091"
+      - "9101:9101"
+      - "19091:19091"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: 'broker'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_LISTENERS: 'PLAINTEXT://:19091,PLAINTEXT_HOST://:9091'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://${EXTERNAL_IP}:19091,PLAINTEXT_HOST://${EXTERNAL_IP}:9091'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '11@controller1:9111,22@controller2:9222,33@controller3:9333'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 3
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    volumes:
+      - "./broker1_data:/tmp/kraft-combined-logs"
+    networks:
+      - kafka_network

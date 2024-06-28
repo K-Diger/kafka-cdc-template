@@ -1,0 +1,20 @@
+version: '3'
+networks:
+  kafka_network:
+    external: true
+    driver: bridge
+
+services:
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "my-kafka-cluster"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "broker1:19091,broker2:29092,broker3:39093"
+      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: "connect-cluster"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: "http://connect1:8083,http://connect2:8084,http://connect3:8085"
+    networks:
+      - kafka_network

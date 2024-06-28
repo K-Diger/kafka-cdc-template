@@ -1,0 +1,25 @@
+version: '3'
+networks:
+  kafka_network:
+    external: true
+    driver: bridge
+
+services:
+  controller3:
+    image: confluentinc/cp-kafka:latest
+    container_name: controller3
+    ports:
+      - "9333:9333"
+    environment:
+      KAFKA_NODE_ID: 33
+      KAFKA_PROCESS_ROLES: 'controller'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '11@controller1:9111,22@controller2:9222,33@controller3:9333'
+      KAFKA_LISTENERS: 'CONTROLLER://0.0.0.0:9333'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-controller-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    volumes:
+      - "./controller3_data:/tmp/kraft-controller-logs"
+    networks:
+      - kafka_network
