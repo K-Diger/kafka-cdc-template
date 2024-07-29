@@ -18,7 +18,7 @@ services:
     cap_add:
       - SYS_PTRACE
     volumes:
-      - mssql_data:/var/opt/mssql
+      - ./mssql_data:/var/opt/mssql
     networks:
       - kafka_network
 

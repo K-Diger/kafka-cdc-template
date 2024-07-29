@@ -27,9 +27,9 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect2"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./source-connect2_data:/var/lib/kafka/data
-      - ./source-connect2_logs:/var/log/kafka
-      - ./source-connect2_plugins:/opt/kafka/plugins
+      - ./connect_source2_data:/var/lib/kafka/data
+      - ./connect_source2_logs:/var/log/kafka
+      - ./connect_source2_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:
