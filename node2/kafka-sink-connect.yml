@@ -5,18 +5,18 @@ networks:
     driver: bridge
 
 services:
-  connect2:
+  sink-connect1:
     image: confluentinc/cp-kafka-connect:latest
-    container_name: connect2
+    container_name: connect-sink1
     ports:
-      - "8084:8084"
+      - "28083:28083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
-      CONNECT_REST_PORT: 8084
-      CONNECT_GROUP_ID: "connect-cluster"
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status"
+      CONNECT_REST_PORT: 28083
+      CONNECT_GROUP_ID: "connect-sink-cluster"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-sink-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-sink-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-sink-status"
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
@@ -24,12 +24,12 @@ services:
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect2"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect-sink"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./connect2_data:/var/lib/kafka/data
-      - ./connect2_logs:/var/log/kafka
-      - ./connect2_plugins:/opt/kafka/plugins
+      - ./connect_sink_data:/var/lib/kafka/data
+      - ./connect_sink_logs:/var/log/kafka
+      - ./connect_sink_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:
@@ -37,7 +37,7 @@ services:
       - -c
       - |
         echo "Installing Connector"
-        confluent-hub install --no-prompt debezium/debezium-connector-sqlserver:2.5.4
+        confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
         #
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run &

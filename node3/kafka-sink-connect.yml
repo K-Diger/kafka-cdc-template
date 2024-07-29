@@ -1,0 +1,45 @@
+version: '3'
+networks:
+  kafka_network:
+    external: true
+    driver: bridge
+
+services:
+  sink-connect1:
+    image: confluentinc/cp-kafka-connect:latest
+    container_name: connect-sink1
+    ports:
+      - "38083:38083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
+      CONNECT_REST_PORT: 38083
+      CONNECT_GROUP_ID: "connect-sink-cluster"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-sink-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-sink-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-sink-status"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect-sink"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
+    volumes:
+      - ./connect_sink_data:/var/lib/kafka/data
+      - ./connect_sink_logs:/var/log/kafka
+      - ./connect_sink_plugins:/opt/kafka/plugins
+    networks:
+      - kafka_network
+    command:
+      - bash
+      - -c
+      - |
+        echo "Installing Connector"
+        confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
+        #
+        echo "Launching Kafka Connect worker"
+        /etc/confluent/docker/run &
+        #
+        sleep infinity
