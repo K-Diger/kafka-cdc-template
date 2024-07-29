@@ -86,6 +86,11 @@
 -- SOURCE 라는 데이터베이스를 사용
 USE SOURCE;
 
+create table dbo.MEMBER_BASE(
+    member_id bigint primary key,
+    nickname nvarchar(50)
+)
+
 -- SOURCE 데이터베이스에 대해 CDC를 활성화
 EXEC sys.sp_cdc_enable_db;
 
