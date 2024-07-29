@@ -84,6 +84,13 @@
 3. `SOURCE` 데이터베이스 내에 `dbo` 스키마 내에 `MEMBER_BASE` 테이블 생성
 ```sql
 -- SOURCE 라는 데이터베이스를 사용
+USE [EXTERNAL];
+
+create table dbo.MEMBER_BASE(
+    member_id bigint primary key,
+    nickname nvarchar(50)
+)
+
 USE SOURCE;
 
 create table dbo.MEMBER_BASE(
@@ -91,28 +98,23 @@ create table dbo.MEMBER_BASE(
     nickname nvarchar(50)
 )
 
--- SOURCE 데이터베이스에 대해 CDC를 활성화
 EXEC sys.sp_cdc_enable_db;
 
--- SOURCE 데이터베이스의 변경 추적 옵션을 설정
--- 변경 추적은 데이터베이스의 테이블에서 변경된 행을 식별하는 데 사용
--- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
 ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
--- dbo 스키마의 MEMBER_BASE 테이블에 대해 CDC를 활성화
 EXEC sys.sp_cdc_enable_table
       @source_schema = 'dbo',
       @source_name = 'MEMBER_BASE',
       @role_name = 'sa';
 
-insert into dbo.MEMBER_BASE(id, name) values (1, 'testNickname1');
-insert into dbo.MEMBER_BASE(id, name) values (2, 'testNickname2');
-insert into dbo.MEMBER_BASE(id, name) values (3, 'testNickname3');
-insert into dbo.MEMBER_BASE(id, name) values (4, 'testNickname4');
-insert into dbo.MEMBER_BASE(id, name) values (5, 'testNickname5');
-insert into dbo.MEMBER_BASE(id, name) values (6, 'testNickname6');
-insert into dbo.MEMBER_BASE(id, name) values (7, 'testNickname7');
-insert into dbo.MEMBER_BASE(id, name) values (8, 'testNickname8');
-insert into dbo.MEMBER_BASE(id, name) values (9, 'testNickname9');
-insert into dbo.MEMBER_BASE(id, name) values (10, 'testNickname10');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33311, 'testNickname1');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33321, 'testNickname2');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33331, 'testNickname3');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33341, 'testNickname4');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33351, 'testNickname5');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33361, 'testNickname6');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33371, 'testNickname7');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33381, 'testNickname8');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33391, 'testNickname9');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (333101, 'testNickname10');
 ```
