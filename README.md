@@ -12,7 +12,7 @@
 
 ```json
 {
-    "name": "mssql-cdc-members-connector",
+    "name": "mssql-cdc-member-source-connector",
     "config": {
         "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
         "tasks.max": "1",
@@ -21,9 +21,9 @@
         "database.port": "1433",
         "database.user": "SA",
         "database.password": "admin123$%",
-        "database.names": "test",
-        "schema.include.list": "Members",
-        "table.include.list" : "Members.member",
+        "database.names": "SOURCE",
+        "schema.include.list": "SOURCE",
+        "table.include.list" : "dbo.MEMBER_BASE",
         "database.history.kafka.bootstrap.servers":"broker1:19091,broker2:29092,broker3:39093",
         "db.timezone": "Asia/Seoul",
         "topic.prefix": "cdc",
@@ -50,41 +50,35 @@
 
 ### 1. MSSQL 접속 및 데이터베이스, 스키마, 테이블 생성
 
-1. test 데이터베이스를 생성
-2. test 데이터베이스 내에 Members 스키마를 생성
-3. test 데이터베이스 내에 Members 스키마를 내에 member테이블 생성
+1. `SOURCE` 데이터베이스를 생성
+2. `SOURCE` 데이터베이스 내에 `dbo` 스키마를 사용
+3. `SOURCE` 데이터베이스 내에 `dbo` 스키마 내에 `MEMBER_BASE` 테이블 생성
 ```sql
-create table Members.member(
-    member_id bigint primary key,
-    nickname nvarchar(50)
-)
+-- SOURCE 라는 데이터베이스를 사용
+USE SOURCE;
 
--- test 라는 데이터베이스를 사용
-USE test;
-
--- test 데이터베이스에 대해 CDC를 활성화
+-- SOURCE 데이터베이스에 대해 CDC를 활성화
 EXEC sys.sp_cdc_enable_db;
 
--- test 데이터베이스의 변경 추적 옵션을 설정
+-- SOURCE 데이터베이스의 변경 추적 옵션을 설정
 -- 변경 추적은 데이터베이스의 테이블에서 변경된 행을 식별하는 데 사용
 -- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
-ALTER DATABASE test SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
+ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
--- Members 스키마의 member 테이블에 대해 CDC를 활성화
+-- dbo 스키마의 MEMBER_BASE 테이블에 대해 CDC를 활성화
 EXEC sys.sp_cdc_enable_table
-      @source_schema = 'Members',
-      @source_name = 'member',
+      @source_schema = 'dbo',
+      @source_name = 'MEMBER_BASE',
       @role_name = 'sa';
 
-
-insert into Members.member(member_id, nickname) values (1, 'testNickname1');
-insert into Members.member(member_id, nickname) values (2, 'testNickname2');
-insert into Members.member(member_id, nickname) values (3, 'testNickname3');
-insert into Members.member(member_id, nickname) values (4, 'testNickname4');
-insert into Members.member(member_id, nickname) values (5, 'testNickname5');
-insert into Members.member(member_id, nickname) values (6, 'testNickname6');
-insert into Members.member(member_id, nickname) values (7, 'testNickname7');
-insert into Members.member(member_id, nickname) values (8, 'testNickname8');
-insert into Members.member(member_id, nickname) values (9, 'testNickname9');
-insert into Members.member(member_id, nickname) values (10, 'testNickname10');
+insert into dbo.MEMBER_BASE(id, name) values (1, 'testNickname1');
+insert into dbo.MEMBER_BASE(id, name) values (2, 'testNickname2');
+insert into dbo.MEMBER_BASE(id, name) values (3, 'testNickname3');
+insert into dbo.MEMBER_BASE(id, name) values (4, 'testNickname4');
+insert into dbo.MEMBER_BASE(id, name) values (5, 'testNickname5');
+insert into dbo.MEMBER_BASE(id, name) values (6, 'testNickname6');
+insert into dbo.MEMBER_BASE(id, name) values (7, 'testNickname7');
+insert into dbo.MEMBER_BASE(id, name) values (8, 'testNickname8');
+insert into dbo.MEMBER_BASE(id, name) values (9, 'testNickname9');
+insert into dbo.MEMBER_BASE(id, name) values (10, 'testNickname10');
 ```

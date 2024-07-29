@@ -7,7 +7,7 @@ networks:
 services:
   sink-connect2:
     image: confluentinc/cp-kafka-connect:latest
-    container_name: connect-sink2
+    container_name: sink-connect2
     ports:
       - "28083:28083"
     environment:
@@ -27,9 +27,9 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect-sink"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./connect_sink2_data:/var/lib/kafka/data
-      - ./connect_sink2_logs:/var/log/kafka
-      - ./connect_sink2_plugins:/opt/kafka/plugins
+      - ./sink_connect2_data:/var/lib/kafka/data
+      - ./sink_connect2_logs:/var/log/kafka
+      - ./sink_connect2_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:
