@@ -10,6 +10,7 @@
 2. 컨테이너가 다 떴으면 아래 참고 사항의 내용을 수행한다.
 3. 참고 사항의 내용을 수행했으면 HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:8084/connectors` 혹은 `http://localhost:8085/connectors` 으로 DB에 관한 커넥트를 등록한다. 이 때 메서드는 POST 요청으로 보내야하며, Requset Body는 아래와 같다.
 
+#### 소스 커넥터 등록 [POST] http://localhost:8083/connectors
 ```json
 {
     "name": "mssql-cdc-member-source-connector",
@@ -33,8 +34,36 @@
 }
 ```
 
-4. 이제 DB의 데이터를 삭제하고 생성하고 변경하는 등 쓰기요청을 수행한 후에 `http:://localhost:8080` 카프카 UI로 들어가서 CDC내용에 관한 토픽 메세지를 확인한다.
+#### 싱크 커넥터 등록 [POST] http://localhost:18083/connectors
+```json
+{
+  "name": "mssql-cdc-member-sink-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "topics": "cdc-member-source.SOURCE.dbo.MEMBER_BASE",
+    "connection.url": "jdbc:sqlserver://localhost:1433;databaseName=EXTERNAL",
+    "connection.user": "sa",
+    "connection.password": "admin123$%",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "insert.mode": "upsert",
+    "delete.enabled": "true",
+    "pk.mode": "record_key",
+    "pk.fields": "id",
+    "table.name.format": "${topic}",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "org.apache.kafka.connect.transforms.ExtractField$Value",
+    "transforms.unwrap.field": "payload",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "true",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true"
+  }
+}
+```
 
+4. 이제 DB의 데이터를 삭제하고 생성하고 변경하는 등 쓰기요청을 수행한 후에 `http:://localhost:8080` 카프카 UI로 들어가서 CDC내용에 관한 토픽 메세지를 확인한다.
 
 
 ## 주의 사항

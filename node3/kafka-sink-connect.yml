@@ -11,6 +11,7 @@ services:
     ports:
       - "38083:38083"
     environment:
+      CONNECT_LISTENERS: 'http://0.0.0.0:38083'
       CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
       CONNECT_REST_PORT: 38083
       CONNECT_GROUP_ID: "connect-sink-cluster"
@@ -24,7 +25,7 @@ services:
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect-sink"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "sink-connect3"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
       - ./sink_connect3_data:/var/lib/kafka/data
