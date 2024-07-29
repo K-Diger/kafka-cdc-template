@@ -5,9 +5,9 @@ networks:
     driver: bridge
 
 services:
-  sink-connect1:
+  sink-connect2:
     image: confluentinc/cp-kafka-connect:latest
-    container_name: connect-sink1
+    container_name: connect-sink2
     ports:
       - "28083:28083"
     environment:
