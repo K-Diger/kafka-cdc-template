@@ -2,6 +2,8 @@ kafka-cdc.iml
 
 .idea
 
+db/mssql_data
+
 node1/controller1_data
 node1/broker1_data
 node1/connect_source1_data
