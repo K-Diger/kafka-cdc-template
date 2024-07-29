@@ -27,9 +27,9 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect-sink"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./connect_sink_data:/var/lib/kafka/data
-      - ./connect_sink_logs:/var/log/kafka
-      - ./connect_sink_plugins:/opt/kafka/plugins
+      - ./connect_sink3_data:/var/lib/kafka/data
+      - ./connect_sink3_logs:/var/log/kafka
+      - ./connect_sink3_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:

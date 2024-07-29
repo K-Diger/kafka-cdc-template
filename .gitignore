@@ -4,28 +4,27 @@ kafka-cdc.iml
 
 node1/controller1_data
 node1/broker1_data
-node1/source-connect1_data
-node1/source-connect1_logs
-node1/source-connect1_plugins
-node1/sink-connect1_data
-node1/sink-connect1_logs
-node1/sink-connect1_plugins
-
+node1/connect_source1_data
+node1/connect_source1_logs
+node1/connect_source1_plugins
+node1/connect_sink1_data
+node1/connect_sink1_logs
+node1/connect_sink1_plugins
 
 node2/controller2_data
 node2/broker2_data
-node1/source-connect2_data
-node1/source-connect2_logs
-node1/source-connect2_plugins
-node1/sink-connect2_data
-node1/sink-connect2_logs
-node1/sink-connect2_plugins
+node1/connect_source2_data
+node1/connect_source2_logs
+node1/connect_source2_plugins
+node1/connect_sink2_data
+node1/connect_sink2_logs
+node1/connect_sink2_plugins
 
 node3/controller3_data
 node3/broker3_data
-node1/source-connect3_data
-node1/source-connect3_logs
-node1/source-connect3_plugins
-node1/sink-connect3_data
-node1/sink-connect3_logs
-node1/sink-connect3_plugins
+node1/connect_source3_data
+node1/connect_source3_logs
+node1/connect_source3_plugins
+node1/connect_sink3_data
+node1/connect_sink3_logs
+node1/connect_sink3_plugins
