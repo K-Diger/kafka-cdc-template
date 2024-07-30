@@ -10,55 +10,50 @@
 2. 컨테이너가 다 떴으면 아래 참고 사항의 내용을 수행한다.
 3. 참고 사항의 내용을 수행했으면 HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:8084/connectors` 혹은 `http://localhost:8085/connectors` 으로 DB에 관한 커넥트를 등록한다. 이 때 메서드는 POST 요청으로 보내야하며, Requset Body는 아래와 같다.
 
-#### 소스 커넥터 등록 [POST] http://localhost:8083/connectors
+#### 1. 소스 커넥터 등록 [POST] http://localhost:8083/connectors
 ```json
 {
-    "name": "mssql-cdc-member-source-connector",
-    "config": {
-        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-        "tasks.max": "1",
-        "database.encrypt": false,
-        "database.hostname": "host.docker.internal",
-        "database.port": "1433",
-        "database.user": "SA",
-        "database.password": "admin123$%",
-        "database.names": "SOURCE",
-        "schema.include.list": "SOURCE",
-        "table.include.list" : "dbo.MEMBER_BASE",
-        "database.history.kafka.bootstrap.servers":"broker1:19091,broker2:29092,broker3:39093",
-        "db.timezone": "Asia/Seoul",
-        "topic.prefix": "cdc",
-        "schema.history.internal.kafka.bootstrap.servers":"broker1:19091,broker2:29092,broker3:39093",
-        "schema.history.internal.kafka.topic":"schema-history-cdc"
-    }
+  "name": "mssql-cdc-member-source-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "tasks.max": "1",
+    "database.encrypt": false,
+    "database.hostname": "host.docker.internal",
+    "database.port": "1433",
+    "database.user": "SA",
+    "database.password": "admin123$%",
+    "database.names": "SOURCE",
+    "schema.include.list": "dbo",
+    "table.include.list": "dbo.MEMBER_BASE",
+    "database.history.kafka.bootstrap.servers": "broker1:19091,broker2:29092,broker3:39093",
+    "db.timezone": "Asia/Seoul",
+    "topic.prefix": "member-source",
+    "schema.history.internal.kafka.bootstrap.servers": "broker1:19091,broker2:29092,broker3:39093",
+    "schema.history.internal.kafka.topic": "schema-history-cdc"
+  }
 }
 ```
 
-#### 싱크 커넥터 등록 [POST] http://localhost:18083/connectors
+#### 2. 싱크 커넥터 등록 [POST] http://localhost:18083/connectors
 ```json
 {
   "name": "mssql-cdc-member-sink-connector",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-    "tasks.max": "1",
-    "topics": "cdc-member-source.SOURCE.dbo.MEMBER_BASE",
-    "connection.url": "jdbc:sqlserver://localhost:1433;databaseName=EXTERNAL",
+    "connection.url": "jdbc:sqlserver://host.docker.internal:1433;databaseName=EXTERNAL",
     "connection.user": "sa",
     "connection.password": "admin123$%",
-    "auto.create": "true",
-    "auto.evolve": "true",
-    "insert.mode": "upsert",
+    "auto.create": "false",
+    "auto.evolve": "false",
     "delete.enabled": "true",
+    "tasks.max": "1",
+    "topics": "member-source.SOURCE.dbo.MEMBER_BASE",
+    "table.name.format": "EXTERNAL.dbo.MEMBER_BASE",
     "pk.mode": "record_key",
-    "pk.fields": "id",
-    "table.name.format": "${topic}",
+    "insert.mode": "upsert",
     "transforms": "unwrap",
     "transforms.unwrap.type": "org.apache.kafka.connect.transforms.ExtractField$Value",
-    "transforms.unwrap.field": "payload",
-    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "key.converter.schemas.enable": "true",
-    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "value.converter.schemas.enable": "true"
+    "transforms.unwrap.field": "after"
   }
 }
 ```
