@@ -28,17 +28,22 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "sink-connect1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./sink_connect1_data:/var/lib/kafka/data
-      - ./sink_connect1_logs:/var/log/kafka
-      - ./sink_connect1_plugins:/opt/kafka/plugins
+      - ./sink_connect_data:/var/lib/kafka/data
+      - ./sink_connect_logs:/var/log/kafka
+      - ./sink_connect_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:
       - bash
       - -c
       - |
-        echo "Installing Connector"
+        echo "Installing Connectors"
         confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
+        confluent-hub install --no-prompt microsoft/mssql-jdbc:latest
+        #
+        echo "Downloading MSSQL JDBC driver"
+        mkdir -p /opt/kafka/plugins/mssql-jdbc
+        curl -L https://github.com/microsoft/mssql-jdbc/releases/download/v9.4.0/mssql-jdbc-9.4.0.jre8.jar -o /opt/kafka/plugins/mssql-jdbc/mssql-jdbc-9.4.0.jre8.jar
         #
         echo "Launching Kafka Connect worker"
         /etc/confluent/docker/run &

@@ -27,9 +27,9 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "source-connect3"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./source_connect3_data:/var/lib/kafka/data
-      - ./source_connect3_logs:/var/log/kafka
-      - ./source_connect3_plugins:/opt/kafka/plugins
+      - ./source_connect_data:/var/lib/kafka/data
+      - ./source_connect_logs:/var/log/kafka
+      - ./source_connect_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:

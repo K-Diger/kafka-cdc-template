@@ -9,27 +9,27 @@ ui/kafka_ui_data
 node1/controller1_data
 node1/broker1_data
 
-node1/source_connect1_data
-node1/source_connect1_logs
-node1/source_connect1_plugins
-node1/sink_connect1_data
-node1/sink_connect1_logs
-node1/sink_connect1_plugins
+node1/source_connect_data
+node1/source_connect_logs
+node1/source_connect_plugins
+node1/sink_connect_data
+node1/sink_connect_logs
+node1/sink_connect_plugins
 
 node2/controller2_data
 node2/broker2_data
-node2/source_connect2_data
-node2/source_connect2_logs
-node2/source_connect2_plugins
-node2/sink_connect2_data
-node2/sink_connect2_logs
-node2/sink_connect2_plugins
+node2/source_connect_data
+node2/source_connect_logs
+node2/source_connect_plugins
+node2/sink_connect_data
+node2/sink_connect_logs
+node2/sink_connect_plugins
 
 node3/controller3_data
 node3/broker3_data
-node3/source_connect3_data
-node3/source_connect3_logs
-node3/source_connect3_plugins
-node3/sink_connect3_data
-node3/sink_connect3_logs
-node3/sink_connect3_plugins
+node3/source_connect_data
+node3/source_connect_logs
+node3/source_connect_plugins
+node3/sink_connect_data
+node3/sink_connect_logs
+node3/sink_connect_plugins

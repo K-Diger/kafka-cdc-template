@@ -107,14 +107,14 @@ EXEC sys.sp_cdc_enable_table
       @source_name = 'MEMBER_BASE',
       @role_name = 'sa';
 
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33311, 'testNickname1');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33321, 'testNickname2');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33331, 'testNickname3');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33341, 'testNickname4');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33351, 'testNickname5');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33361, 'testNickname6');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33371, 'testNickname7');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33381, 'testNickname8');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (33391, 'testNickname9');
-insert into dbo.MEMBER_BASE(member_id, nickname) values (333101, 'testNickname10');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3311, 'testNickname1');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3321, 'testNickname2');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3331, 'testNickname3');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3341, 'testNickname4');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3351, 'testNickname5');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3361, 'testNickname6');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3371, 'testNickname7');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3381, 'testNickname8');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (3391, 'testNickname9');
+insert into dbo.MEMBER_BASE(member_id, nickname) values (33101, 'testNickname10');
 ```

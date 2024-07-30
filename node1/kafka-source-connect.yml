@@ -13,10 +13,10 @@ services:
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
       CONNECT_REST_PORT: 8083
-      CONNECT_GROUP_ID: "connect-cluster"
-      CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
-      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
-      CONNECT_STATUS_STORAGE_TOPIC: "connect-status"
+      CONNECT_GROUP_ID: "connect-source-cluster"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-source-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-source-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-source-status"
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 3
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 3
@@ -24,12 +24,12 @@ services:
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_REST_ADVERTISED_HOST_NAME: "connect1"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "source-connect1"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components,/opt/kafka/plugins"
     volumes:
-      - ./source-connect1_data:/var/lib/kafka/data
-      - ./source-connect1_logs:/var/log/kafka
-      - ./source-connect1_plugins:/opt/kafka/plugins
+      - ./source_connect_data:/var/lib/kafka/data
+      - ./source_connect_logs:/var/log/kafka
+      - ./source_connect_plugins:/opt/kafka/plugins
     networks:
       - kafka_network
     command:
