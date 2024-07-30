@@ -12,11 +12,13 @@ services:
     ports:
       - "8080:8080"
     environment:
-      KAFKA_CLUSTERS_0_NAME: "my-kafka-cluster"
+      KAFKA_CLUSTERS_0_NAME: "cluster"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "broker1:19091,broker2:29092,broker3:39093"
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: "connect-cluster"
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: "http://connect1:8083,http://connect2:8084,http://connect3:8085"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: "connect-source-cluster"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: "http://source-connect1:8083,http://source-connect2:8084,http://source-connect3:8085"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME: "connect-sink-cluster"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS: "http://sink-connect1:18083,http://sink-connect2:28083,http://sink-connect3:38083"
     volumes:
       - ./kafka_ui_data:/data
     networks:

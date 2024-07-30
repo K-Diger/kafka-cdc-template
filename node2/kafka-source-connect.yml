@@ -11,9 +11,10 @@ services:
     ports:
       - "8084:8084"
     environment:
+      CONNECT_LISTENERS: 'http://0.0.0.0:8084'
       CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
       CONNECT_REST_PORT: 8084
-      CONNECT_GROUP_ID: "connect-cluster"
+      CONNECT_GROUP_ID: "connect-source-cluster"
       CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
       CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
       CONNECT_STATUS_STORAGE_TOPIC: "connect-status"

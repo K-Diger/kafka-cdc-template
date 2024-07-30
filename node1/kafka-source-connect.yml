@@ -11,6 +11,7 @@ services:
     ports:
       - "8083:8083"
     environment:
+      CONNECT_LISTENERS: 'http://0.0.0.0:8083'
       CONNECT_BOOTSTRAP_SERVERS: 'broker1:19091,broker2:29092,broker3:39093'
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: "connect-source-cluster"
