@@ -16,15 +16,15 @@
 ### Step 1. MSSQL 접속 및 데이터베이스, 스키마, 테이블 생성
 
 ```sql
--- SINK 데이터베이스 사용
-USE SINK;
+-- TOBE 데이터베이스 사용
+USE TOBE;
 create table dbo.MEMBER_BASE(
     member_id bigint primary key,
     nickname  nvarchar(50)
 )
 
--- SOURCE 데이터베이스 사용
-USE SOURCE;
+-- ASIS 데이터베이스 사용
+USE ASIS;
 create table dbo.MEMBER_BASE(
     member_id bigint primary key,
     nickname  nvarchar(50)
@@ -38,7 +38,7 @@ EXEC sys.sp_cdc_enable_db;
 -- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
 ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
--- dbo스키마 MEMBER_BASE 테이블 CDC 활성화
+-- ASIS 데이터베이스 dbo 스키마 MEMBER_BASE 테이블 CDC 활성화p
 EXEC sys.sp_cdc_enable_table
       @source_schema = 'dbo',
       @source_name = 'MEMBER_BASE',
@@ -74,12 +74,12 @@ HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:80
     "database.port": "1433",
     "database.user": "SA",
     "database.password": "admin123$%",
-    "database.names": "SOURCE",
+    "database.names": "ASIS",
     "schema.include.list": "dbo",
     "table.include.list": "dbo.MEMBER_BASE",
     "database.history.kafka.bootstrap.servers": "broker1:19091,broker2:29092,broker3:39093",
     "db.timezone": "Asia/Seoul",
-    "topic.prefix": "member-source",
+    "topic.prefix": "member-asis",
     "schema.history.internal.kafka.bootstrap.servers": "broker1:19091,broker2:29092,broker3:39093",
     "schema.history.internal.kafka.topic": "schema-history-cdc"
   }
@@ -99,8 +99,8 @@ HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:80
     "auto.evolve": "false",
     "delete.enabled": "true",
     "tasks.max": "1",
-    "topics": "member-source.SOURCE.dbo.MEMBER_BASE",
-    "table.name.format": "EXTERNAL.dbo.MEMBER_BASE",
+    "topics": "member-asis.ASIS.dbo.MEMBER_BASE",
+    "table.name.format": "TOBE.dbo.MEMBER_BASE",
     "pk.mode": "record_key",
     "insert.mode": "upsert",
     "transforms": "unwrap",
