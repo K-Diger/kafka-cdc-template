@@ -38,7 +38,7 @@ EXEC sys.sp_cdc_enable_db;
 -- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
 ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
--- ASIS 데이터베이스 dbo 스키마 MEMBER_BASE 테이블 CDC 활성화p
+-- ASIS 데이터베이스 dbo 스키마 MEMBER_BASE 테이블 CDC 활성화
 EXEC sys.sp_cdc_enable_table
       @source_schema = 'dbo',
       @source_name = 'MEMBER_BASE',
