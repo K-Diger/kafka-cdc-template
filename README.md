@@ -92,7 +92,7 @@ HTTP 요청으로 `http://localhost:8083/connectors` 혹은 `http://localhost:80
   "name": "mssql-cdc-member-sink-connector",
   "config": {
     "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-    "connection.url": "jdbc:sqlserver://host.docker.internal:1433;databaseName=EXTERNAL",
+    "connection.url": "jdbc:sqlserver://host.docker.internal:1433;databaseName=SINK",
     "connection.user": "sa",
     "connection.password": "admin123$%",
     "auto.create": "false",
