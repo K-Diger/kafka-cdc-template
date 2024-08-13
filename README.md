@@ -15,29 +15,31 @@
 
 ### Step 1. MSSQL 접속 및 데이터베이스, 스키마, 테이블 생성
 
-1. `SOURCE`, `EXTERNAL` 데이터베이스를 생성
-2. `SOURCE`, `SOURCE` 데이터베이스 내에 `dbo` 스키마를 사용
-3. `SOURCE`, `SOURCE` 데이터베이스 내에 `dbo` 스키마 내에 `MEMBER_BASE` 테이블 생성
 ```sql
--- SOURCE 라는 데이터베이스를 사용
-USE [EXTERNAL];
-
+-- SINK 데이터베이스 사용
+USE SINK;
 create table dbo.MEMBER_BASE(
     member_id bigint primary key,
-    nickname nvarchar(50)
+    nickname  nvarchar(50)
 )
 
+-- SOURCE 데이터베이스 사용
 USE SOURCE;
-
 create table dbo.MEMBER_BASE(
     member_id bigint primary key,
-    nickname nvarchar(50)
+    nickname  nvarchar(50)
 )
 
-EXEC sys.sp_cdc_enable_db;
+-- 데이터베이스 CDC 활성화
+    EXEC sys.sp_cdc_enable_db;
 
-ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
+-- CDC 활성화
+-- 변경 추적은 데이터베이스의 테이블에서 변경된 행을 식별하는 데 사용
+-- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
+ALTER
+DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
+-- dbo스키마 MEMBER_BASE 테이블 CDC 활성화
 EXEC sys.sp_cdc_enable_table
       @source_schema = 'dbo',
       @source_name = 'MEMBER_BASE',
