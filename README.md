@@ -31,13 +31,12 @@ create table dbo.MEMBER_BASE(
 )
 
 -- 데이터베이스 CDC 활성화
-    EXEC sys.sp_cdc_enable_db;
+EXEC sys.sp_cdc_enable_db;
 
 -- CDC 활성화
 -- 변경 추적은 데이터베이스의 테이블에서 변경된 행을 식별하는 데 사용
 -- 변경 추적 데이터는 3일 동안 보존되고, 자동으로 정리
-ALTER
-DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
+ALTER DATABASE SOURCE SET CHANGE_TRACKING = ON(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
 
 -- dbo스키마 MEMBER_BASE 테이블 CDC 활성화
 EXEC sys.sp_cdc_enable_table
